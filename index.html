@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Rossy" />
+
+<meta name="date" content="2023-09-29" />
+
+<title>5Clase_EGDM_11</title>
+
+<script src="index_files/header-attrs-2.11/header-attrs.js"></script>
+<script src="index_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="index_files/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="index_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="index_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="index_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="index_files/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="index_files/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="index_files/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="index_files/navigation-1.1/tabsets.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">5Clase_EGDM_11</h1>
+<h4 class="author">Rossy</h4>
+<h4 class="date">2023-09-29</h4>
+
+</div>
+
+
+<div id="tipos-de-nas" class="section level2">
+<h2>Tipos de NAs</h2>
+<ol style="list-style-type: decimal">
+<li>MAR</li>
+<li>NMAR</li>
+<li>MCAR</li>
+</ol>
+</div>
+<div id="data-airquality" class="section level2">
+<h2>Data: airquality</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">head</span>(airquality)</span></code></pre></div>
+<pre><code>##   Ozone Solar.R Wind Temp Month Day
+## 1    41     190  7.4   67     5   1
+## 2    36     118  8.0   72     5   2
+## 3    12     149 12.6   74     5   3
+## 4    18     313 11.5   62     5   4
+## 5    NA      NA 14.3   56     5   5
+## 6    28      NA 14.9   66     5   6</code></pre>
+</div>
+<div id="reconocer-nas-8" class="section level2">
+<h2>Reconocer NAs (8)</h2>
+<div id="summary" class="section level3">
+<h3>1. <strong>summary()</strong></h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">summary</span>(airquality)</span></code></pre></div>
+<pre><code>##      Ozone           Solar.R           Wind             Temp      
+##  Min.   :  1.00   Min.   :  7.0   Min.   : 1.700   Min.   :56.00  
+##  1st Qu.: 18.00   1st Qu.:115.8   1st Qu.: 7.400   1st Qu.:72.00  
+##  Median : 31.50   Median :205.0   Median : 9.700   Median :79.00  
+##  Mean   : 42.13   Mean   :185.9   Mean   : 9.958   Mean   :77.88  
+##  3rd Qu.: 63.25   3rd Qu.:258.8   3rd Qu.:11.500   3rd Qu.:85.00  
+##  Max.   :168.00   Max.   :334.0   Max.   :20.700   Max.   :97.00  
+##  NA&#39;s   :37       NA&#39;s   :7                                       
+##      Month            Day      
+##  Min.   :5.000   Min.   : 1.0  
+##  1st Qu.:6.000   1st Qu.: 8.0  
+##  Median :7.000   Median :16.0  
+##  Mean   :6.993   Mean   :15.8  
+##  3rd Qu.:8.000   3rd Qu.:23.0  
+##  Max.   :9.000   Max.   :31.0  
+## </code></pre>
+</div>
+<div id="aggr" class="section level3">
+<h3>2. <strong>aggr()</strong></h3>
+<p>Por el momento lo logra ejecutarse!</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">library</span>(VIM)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="fu">aggr</span>()</span></code></pre></div>
+</div>
+<div id="gg_miss_var" class="section level3">
+<h3>3. <strong>gg_miss_var()</strong></h3>
+<p>Realiza un gráfico de <em>ggplot</em> del número de NAs por cada
+variable.<br />
+Los ordena de mayor a menor.<br />
+El argumento <em>show_pct = TRUE</em>: muestra en porcentaje.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">library</span>(naniar)</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="fu">gg_miss_var</span>(airquality)</span></code></pre></div>
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>
+<div id="vis_dat" class="section level3">
+<h3>4. <strong>vis_dat()</strong></h3>
+<p>Nos muestra todo el dataframe: las filas son las observaciones y las
+columnas son las variables.<br />
+En la leyenda aparece el tipo de dato (entero, numérico, cadena, etc) y
+también aparece los NAs, representados por el colore gris.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">library</span>(visdat)</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="fu">vis_dat</span>(airquality)</span></code></pre></div>
+<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+</div>
+<div id="vis_miss" class="section level3">
+<h3>5. <strong>vis_miss()</strong></h3>
+<p>A comparación de <strong>vis_dat()</strong> que se enfoca en el tipo
+de dato, solo se enfoca en valores NAs y valores completos.<br />
+Por defecto muestra en porcentaje, pero se puede ocultar mediante el
+argumento <em>show_perc = FALSE</em> y <em>show_perc_col =
+FALSE</em>.</p>
+<p>Más ejemplos:<br />
+- <a
+href="https://cran.r-project.org/web/packages/visdat/readme/README.html">https://cran.r-project.org/web/packages/visdat/readme/README.html</a><br />
+- <a
+href="https://cran.r-project.org/web/packages/visdat/vignettes/using_visdat.html">https://cran.r-project.org/web/packages/visdat/vignettes/using_visdat.html</a></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">library</span>(visdat)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="fu">vis_miss</span>(airquality)</span></code></pre></div>
+<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+</div>
+<div id="md.pattern" class="section level3">
+<h3>6. <strong>md.pattern()</strong></h3>
+<p>En la practica, es usado para conjunto de datos con <em>pequeño</em>
+número de columnas.<br />
+Muestra patrones de data perdida.<br />
+Muestra una imagen compuesta por cuadrados, donde los NAs son los de
+color <em>morado</em> y la data presente de color <em>azul</em><br />
+Siempre en la primera fila, habla de los casos completos, y a partir de
+la segunda fila de los NAs.<br />
+Y a partir de la segunda fila, la suma total da el total <strong>de
+FILAS</strong> con NA.</p>
+<p><br />
+En la primera fila siempre muestra los casos completos: En este caso
+tenemos 111 registros que no cuentan con NAs.<br />
+En la segunda fila, hay 35 casos en la variable <strong>Ozone</strong>
+que son NAs.<br />
+En la tercera fila, hay 5 casos en la variable <strong>Solar.R</strong>
+que son NAs.<br />
+En la cuarta fila, hay 2 casos en las variables <strong>Ozone</strong> y
+<strong>Solar.R</strong> que son NAs.<br />
+</p>
+<p>Es decir; hay (35 + 5 + 2 = <strong>42</strong>) filas con NAs en la
+base de datos.<br />
+</p>
+<p>La tabla que aparece después contiene la misma información, solo que
+con 1 y 0, donde:<br />
+<strong>0</strong>: NA<br />
+<strong>1</strong>: Data completa<br />
+</p>
+<p><br />
+La ultima fila <strong>marginal</strong> muestra el total de NAs por
+variable.<br />
+La última columna <strong>marginal</strong> muestra el total de columnas
+que tiene NAs.<br />
+El número que aparece en la esquina última es la suma de NAs por
+columnas (no esta tomando en cuenta las repeticiones). </p>
+<p>Links:<br />
+- <a
+href="http://rismyhammer.com/ml/MICE.html">http://rismyhammer.com/ml/MICE.html</a> 
+- <a
+href="https://rianneschouten.github.io/mice_ampute/vignette/ampute.html">https://rianneschouten.github.io/mice_ampute/vignette/ampute.html</a><br />
+- <a
+href="https://stefvanbuuren.name/fimd/missing-data-pattern.html">https://stefvanbuuren.name/fimd/missing-data-pattern.html</a></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">library</span>(mice)</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="fu">md.pattern</span>(airquality)</span></code></pre></div>
+<p><img src="index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<pre><code>##     Wind Temp Month Day Solar.R Ozone   
+## 111    1    1     1   1       1     1  0
+## 35     1    1     1   1       1     0  1
+## 5      1    1     1   1       0     1  1
+## 2      1    1     1   1       0     0  2
+##        0    0     0   0       7    37 44</code></pre>
+</div>
+<div id="md.pairs" class="section level3">
+<h3>7. <strong>md.pairs()</strong></h3>
+<p>Una alternativa a <strong>ms.pattern()</strong> es
+<strong>md.pairs()</strong>.<br />
+Se basa en tomar <strong>pares</strong> de variables, donde:<br />
+</p>
+<p><strong>r</strong>: Data completa<br />
+<strong>m</strong>: NA<br />
+</p>
+<p><br />
+<strong>rr</strong>: Ambas variables tiene data completa.<br />
+<strong>rm</strong>: La primera variable tiene data completa y la
+segunda NA.<br />
+<strong>mr</strong>: La primera variable tieme NA y la segunda data
+completa.<br />
+<strong>mm</strong>: Ambas variables tiene NA.<br />
+</p>
+<p><br />
+Entonces, para la columnas (<em>Ozone</em>, <em>Solar,R</em>):<br />
+- Hay 111 pares donde ambas variables tienen data completa.
+(<strong>rr</strong>)<br />
+- Hay 5 pares, donde Ozone tiene data completa y Solar.R tiene NA.
+(<strong>rm</strong>)<br />
+- Hay 35 pares, donde Ozone tiene NA y Solar.R tiene data completa
+(<strong>mr</strong>)<br />
+- Hay 2 pares, donde ambas variables tienen NA.
+(<strong>mm</strong>)<br />
+</p>
+<p>Tomar en cuenta que la suma de todos estos casos da igual al número
+de registros (111 + 5 + 35 + 2 = 153).</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">library</span>(mice)</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="fu">md.pairs</span>(airquality)</span></code></pre></div>
+<pre><code>## $rr
+##         Ozone Solar.R Wind Temp Month Day
+## Ozone     116     111  116  116   116 116
+## Solar.R   111     146  146  146   146 146
+## Wind      116     146  153  153   153 153
+## Temp      116     146  153  153   153 153
+## Month     116     146  153  153   153 153
+## Day       116     146  153  153   153 153
+## 
+## $rm
+##         Ozone Solar.R Wind Temp Month Day
+## Ozone       0       5    0    0     0   0
+## Solar.R    35       0    0    0     0   0
+## Wind       37       7    0    0     0   0
+## Temp       37       7    0    0     0   0
+## Month      37       7    0    0     0   0
+## Day        37       7    0    0     0   0
+## 
+## $mr
+##         Ozone Solar.R Wind Temp Month Day
+## Ozone       0      35   37   37    37  37
+## Solar.R     5       0    7    7     7   7
+## Wind        0       0    0    0     0   0
+## Temp        0       0    0    0     0   0
+## Month       0       0    0    0     0   0
+## Day         0       0    0    0     0   0
+## 
+## $mm
+##         Ozone Solar.R Wind Temp Month Day
+## Ozone      37       2    0    0     0   0
+## Solar.R     2       7    0    0     0   0
+## Wind        0       0    0    0     0   0
+## Temp        0       0    0    0     0   0
+## Month       0       0    0    0     0   0
+## Day         0       0    0    0     0   0</code></pre>
+</div>
+<div id="dplyr" class="section level3">
+<h3>8. <strong>dplyr</strong></h3>
+<p>Permite mostrar el total de NAs por fila.<br />
+</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>airquality <span class="sc">%&gt;%</span> </span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), <span class="sc">~</span><span class="fu">sum</span>(<span class="fu">is.na</span>(.))))</span></code></pre></div>
+<pre><code>##   Ozone Solar.R Wind Temp Month Day
+## 1    37       7    0    0     0   0</code></pre>
+<p>Si queremos filtrar que tiene NA de una variable en particular:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>airquality <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(Ozone))</span></code></pre></div>
+<pre><code>##    Ozone Solar.R Wind Temp Month Day
+## 1     NA      NA 14.3   56     5   5
+## 2     NA     194  8.6   69     5  10
+## 3     NA      66 16.6   57     5  25
+## 4     NA     266 14.9   58     5  26
+## 5     NA      NA  8.0   57     5  27
+## 6     NA     286  8.6   78     6   1
+## 7     NA     287  9.7   74     6   2
+## 8     NA     242 16.1   67     6   3
+## 9     NA     186  9.2   84     6   4
+## 10    NA     220  8.6   85     6   5
+## 11    NA     264 14.3   79     6   6
+## 12    NA     273  6.9   87     6   8
+## 13    NA     259 10.9   93     6  11
+## 14    NA     250  9.2   92     6  12
+## 15    NA     332 13.8   80     6  14
+## 16    NA     322 11.5   79     6  15
+## 17    NA     150  6.3   77     6  21
+## 18    NA      59  1.7   76     6  22
+## 19    NA      91  4.6   76     6  23
+## 20    NA     250  6.3   76     6  24
+## 21    NA     135  8.0   75     6  25
+## 22    NA     127  8.0   78     6  26
+## 23    NA      47 10.3   73     6  27
+## 24    NA      98 11.5   80     6  28
+## 25    NA      31 14.9   77     6  29
+## 26    NA     138  8.0   83     6  30
+## 27    NA     101 10.9   84     7   4
+## 28    NA     139  8.6   82     7  11
+## 29    NA     291 14.9   91     7  14
+## 30    NA     258  9.7   81     7  22
+## 31    NA     295 11.5   82     7  23
+## 32    NA     222  8.6   92     8  10
+## 33    NA     137 11.5   86     8  11
+## 34    NA      64 11.5   79     8  15
+## 35    NA     255 12.6   75     8  23
+## 36    NA     153  5.7   88     8  27
+## 37    NA     145 13.2   77     9  27</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>airquality <span class="sc">%&gt;%</span> </span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(Ozone)) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>  <span class="fu">nrow</span>()</span></code></pre></div>
+<pre><code>## [1] 37</code></pre>
+<p>Si queremos filtrar que contenga NA en la dos variables a la vez:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>airquality <span class="sc">%&gt;%</span> </span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(Ozone) <span class="sc">&amp;</span> <span class="fu">is.na</span>(Solar.R))</span></code></pre></div>
+<pre><code>##   Ozone Solar.R Wind Temp Month Day
+## 1    NA      NA 14.3   56     5   5
+## 2    NA      NA  8.0   57     5  27</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>airquality <span class="sc">%&gt;%</span> </span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(Ozone) <span class="sc">&amp;</span> <span class="fu">is.na</span>(Solar.R)) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a>  <span class="fu">nrow</span>()</span></code></pre></div>
+<pre><code>## [1] 2</code></pre>
+<p>Si queremos filtrar al menos un NA en dos variables a la vez:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>airquality <span class="sc">%&gt;%</span> </span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(Ozone) <span class="sc">|</span> <span class="fu">is.na</span>(Solar.R))</span></code></pre></div>
+<pre><code>##    Ozone Solar.R Wind Temp Month Day
+## 1     NA      NA 14.3   56     5   5
+## 2     28      NA 14.9   66     5   6
+## 3     NA     194  8.6   69     5  10
+## 4      7      NA  6.9   74     5  11
+## 5     NA      66 16.6   57     5  25
+## 6     NA     266 14.9   58     5  26
+## 7     NA      NA  8.0   57     5  27
+## 8     NA     286  8.6   78     6   1
+## 9     NA     287  9.7   74     6   2
+## 10    NA     242 16.1   67     6   3
+## 11    NA     186  9.2   84     6   4
+## 12    NA     220  8.6   85     6   5
+## 13    NA     264 14.3   79     6   6
+## 14    NA     273  6.9   87     6   8
+## 15    NA     259 10.9   93     6  11
+## 16    NA     250  9.2   92     6  12
+## 17    NA     332 13.8   80     6  14
+## 18    NA     322 11.5   79     6  15
+## 19    NA     150  6.3   77     6  21
+## 20    NA      59  1.7   76     6  22
+## 21    NA      91  4.6   76     6  23
+## 22    NA     250  6.3   76     6  24
+## 23    NA     135  8.0   75     6  25
+## 24    NA     127  8.0   78     6  26
+## 25    NA      47 10.3   73     6  27
+## 26    NA      98 11.5   80     6  28
+## 27    NA      31 14.9   77     6  29
+## 28    NA     138  8.0   83     6  30
+## 29    NA     101 10.9   84     7   4
+## 30    NA     139  8.6   82     7  11
+## 31    NA     291 14.9   91     7  14
+## 32    NA     258  9.7   81     7  22
+## 33    NA     295 11.5   82     7  23
+## 34    78      NA  6.9   86     8   4
+## 35    35      NA  7.4   85     8   5
+## 36    66      NA  4.6   87     8   6
+## 37    NA     222  8.6   92     8  10
+## 38    NA     137 11.5   86     8  11
+## 39    NA      64 11.5   79     8  15
+## 40    NA     255 12.6   75     8  23
+## 41    NA     153  5.7   88     8  27
+## 42    NA     145 13.2   77     9  27</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a>airquality <span class="sc">%&gt;%</span> </span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(Ozone) <span class="sc">|</span> <span class="fu">is.na</span>(Solar.R)) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a>  <span class="fu">nrow</span>()</span></code></pre></div>
+<pre><code>## [1] 42</code></pre>
+<p><br />
+Por ejemplo, de la base de datos <em>airquality</em>, se tiene 153
+registros, de los cuales:<br />
+- Ozone: 37 NA<br />
+- Solar.R:7 NA<br />
+- Ambas: 2 NA<br />
+</p>
+<p>Entonces:<br />
+- Solo Ozone: 35 NA<br />
+- Solo Solar.R: NA</p>
+<p><br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+</p>
+</div>
+</div>
+<div id="sustituir-nas" class="section level2">
+<h2>Sustituir NAs</h2>
+<p>You can also embed plots, for example:</p>
+<p><img src="index_files/figure-html/pressure-1.png" width="672" /></p>
+<p>Note that the <code>echo = FALSE</code> parameter was added to the
+code chunk to prevent printing of the R code that generated the
+plot.</p>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

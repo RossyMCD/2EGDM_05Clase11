@@ -1,0 +1,218 @@
+---
+title: "5Clase_EGDM_11"
+author: "Rossy"
+date: "2023-09-29"
+output:
+  html_document:
+    theme: flatly
+    highlight: pygments
+    self_contained: false
+    number_sections: false
+    fig_caption: true
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+
+## Tipos de NAs
+
+1. MAR
+2. NMAR
+3. MCAR
+
+## Data: airquality
+
+```{r}
+head(airquality)
+```
+
+## Reconocer NAs (8)
+
+### 1. **summary()**
+
+```{r}
+summary(airquality)
+```
+
+### 2. **aggr()**
+
+Por el momento lo logra ejecutarse!
+
+```{r, eval=FALSE}
+library(VIM)
+aggr()
+```
+
+### 3. **gg_miss_var()**
+
+Realiza un gráfico de *ggplot* del número de NAs por cada variable. \
+Los ordena de mayor a menor. \
+El argumento *show_pct = TRUE*: muestra en porcentaje.
+
+```{r}
+library(naniar)
+gg_miss_var(airquality)
+```
+
+### 4. **vis_dat()**
+
+Nos muestra todo el dataframe: las filas son las observaciones y las columnas son las variables.\
+En la leyenda aparece el tipo de dato (entero, numérico, cadena, etc) y también aparece los NAs, representados por el colore gris.
+
+```{r}
+library(visdat)
+vis_dat(airquality)
+```
+
+### 5. **vis_miss()**
+
+A comparación de **vis_dat()** que se enfoca en el tipo de dato, solo se enfoca en valores NAs y valores completos.\
+Por defecto muestra en porcentaje, pero se puede ocultar mediante el argumento *show_perc = FALSE* y *show_perc_col = FALSE*.
+
+Más ejemplos:\
+- [https://cran.r-project.org/web/packages/visdat/readme/README.html](https://cran.r-project.org/web/packages/visdat/readme/README.html)\
+- [https://cran.r-project.org/web/packages/visdat/vignettes/using_visdat.html](https://cran.r-project.org/web/packages/visdat/vignettes/using_visdat.html)
+
+```{r}
+library(visdat)
+vis_miss(airquality)
+```
+
+
+### 6. **md.pattern()**
+
+En la practica, es usado para conjunto de datos con *pequeño* número de columnas.\
+Muestra patrones de data perdida.\
+Muestra una imagen compuesta por cuadrados, donde los NAs son los de color *morado* y la data presente de color *azul*\
+Siempre en la primera fila, habla de los casos completos, y a partir de la segunda fila de los NAs.\
+Y a partir de la segunda fila, la suma total da el total **de FILAS** con NA.
+
+\
+En la primera fila siempre muestra los casos completos: En este caso tenemos 111 registros que no cuentan con NAs.\
+En la segunda fila, hay 35 casos en la variable **Ozone** que son NAs.\
+En la tercera fila, hay 5 casos en la variable **Solar.R** que son NAs.\
+En la cuarta fila, hay 2 casos en las variables **Ozone** y **Solar.R** que son NAs.\
+
+Es decir; hay (35 + 5 + 2 = **42**) filas con NAs en la base de datos.\
+
+
+La tabla que aparece después contiene la misma información, solo que con 1 y 0, donde:\
+**0**: NA\
+**1**: Data completa\
+
+\
+La ultima fila **marginal** muestra el total de NAs por variable.\
+La última columna **marginal** muestra el total de columnas que tiene NAs.\
+El número que aparece en la esquina última es la suma de NAs por columnas (no esta tomando en cuenta las repeticiones).\ 
+
+
+Links:\
+- [http://rismyhammer.com/ml/MICE.html](http://rismyhammer.com/ml/MICE.html)\ 
+- [https://rianneschouten.github.io/mice_ampute/vignette/ampute.html](https://rianneschouten.github.io/mice_ampute/vignette/ampute.html) \
+- [https://stefvanbuuren.name/fimd/missing-data-pattern.html](https://stefvanbuuren.name/fimd/missing-data-pattern.html)
+
+```{r}
+library(mice)
+md.pattern(airquality)
+```
+
+### 7. **md.pairs()**
+
+Una alternativa a **ms.pattern()** es **md.pairs()**.\
+Se basa en tomar **pares** de variables, donde:\
+
+**r**: Data completa \
+**m**: NA \
+
+\
+**rr**: Ambas variables tiene data completa.\
+**rm**: La primera variable tiene data completa y la segunda NA.\
+**mr**: La primera variable tieme NA y la segunda data completa.\
+**mm**: Ambas variables tiene NA.\
+
+\
+Entonces, para la columnas (*Ozone*, *Solar,R*):\
+- Hay 111 pares donde ambas variables tienen data completa. (**rr**)\
+- Hay 5 pares, donde Ozone tiene data completa y Solar.R tiene NA. (**rm**)\
+- Hay 35 pares, donde Ozone tiene NA y Solar.R tiene data completa (**mr**)\
+- Hay 2 pares, donde ambas variables tienen NA. (**mm**) \
+
+Tomar en cuenta que la suma de todos estos casos da igual al número de registros (111 + 5 + 35 + 2 = 153).
+
+```{r}
+library(mice)
+md.pairs(airquality)
+```
+
+### 8. **dplyr**
+
+Permite mostrar el total de NAs por fila.\
+
+
+```{r}
+library(dplyr)
+airquality %>% 
+  summarise(across(everything(), ~sum(is.na(.))))
+```
+
+Si queremos filtrar que tiene NA de una variable en particular:
+```{r}
+airquality %>% 
+  filter(is.na(Ozone))
+airquality %>% 
+  filter(is.na(Ozone)) %>% 
+  nrow()
+```
+
+Si queremos filtrar que contenga NA en la dos variables a la vez:
+```{r}
+airquality %>% 
+  filter(is.na(Ozone) & is.na(Solar.R))
+airquality %>% 
+  filter(is.na(Ozone) & is.na(Solar.R)) %>% 
+  nrow()
+```
+
+Si queremos filtrar al menos un NA en dos variables a la vez:
+```{r}
+airquality %>% 
+  filter(is.na(Ozone) | is.na(Solar.R))
+airquality %>% 
+  filter(is.na(Ozone) | is.na(Solar.R)) %>% 
+  nrow()
+```
+
+
+\
+Por ejemplo, de la base de datos *airquality*, se tiene 153 registros, de los cuales: \
+- Ozone: 37 NA\
+- Solar.R:7 NA\
+- Ambas: 2 NA\
+
+
+Entonces:\
+- Solo Ozone: 35 NA\
+- Solo Solar.R: NA
+
+\
+\
+\
+\
+\
+\
+\
+\
+
+## Sustituir NAs
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
