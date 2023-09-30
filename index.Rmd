@@ -1,5 +1,5 @@
 ---
-title: "5Clase_EGDM_11"
+title: "Exploración de datos con técnicas multivariadas - Clase 5"
 author: "Rossy"
 date: "2023-09-29"
 output:
@@ -20,9 +20,9 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 
 ## Tipos de NAs
 
-1. MAR
-2. NMAR
-3. MCAR
+1. MAR (Missing At Random)\
+2. NMAR (Not Missing At Random)\
+3. MCAR (Missing Completely At Random)
 
 ## Data: airquality
 
@@ -32,7 +32,7 @@ head(airquality)
 
 ## Reconocer NAs (8)
 
-### 1. **summary()**
+### 1. **<span style="background-color: #FFFF00">summary()</span>**
 
 ```{r}
 summary(airquality)
@@ -58,7 +58,7 @@ library(naniar)
 gg_miss_var(airquality)
 ```
 
-### 4. **vis_dat()**
+### 4. **<span style = "background-color: #FFFF00">vis_dat()</span>**
 
 Nos muestra todo el dataframe: las filas son las observaciones y las columnas son las variables.\
 En la leyenda aparece el tipo de dato (entero, numérico, cadena, etc) y también aparece los NAs, representados por el colore gris.
@@ -83,7 +83,7 @@ vis_miss(airquality)
 ```
 
 
-### 6. **md.pattern()**
+### 6. **<span style = "background-color: #FFFF00">md.pattern()</span>**
 
 En la practica, es usado para conjunto de datos con *pequeño* número de columnas.\
 Muestra patrones de data perdida.\
@@ -148,7 +148,7 @@ library(mice)
 md.pairs(airquality)
 ```
 
-### 8. **dplyr**
+### 8. **<span style = "background-color: #FFFF00">dplyr</span>**
 
 Permite mostrar el total de NAs por fila.\
 
@@ -209,10 +209,94 @@ Entonces:\
 
 ## Sustituir NAs
 
-You can also embed plots, for example:
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+### 1. **<span style = "background-color: #FFFF00">mice</span>**
+
+Se utiliza la función **mice()** para realizar la imputación y la función **complete()** para extraer el dataframe.
+
+```{r}
+library(mice)
+Data11 <- complete(mice(airquality, method = "mean"))
+head(Data11)
+#Comprobar que no hay vacio
+Data11 %>% 
+  summarise(across(everything(), ~sum(is.na(.))))
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+### 2. **<span style = "background-color: #FFFF00">dplyr - ifelse()</span>**
+
+Utilizamos la función **mutate()** para sobreescribir la variable *Ozone* y **ifelse()** para darle la condición de que si es NA reemplazarlo.
+
+```{r}
+Data11 <- airquality %>% 
+  mutate(Ozone = ifelse(is.na(Ozone), mean(Ozone, na.rm = TRUE), Ozone))
+head(Data11)
+#Comprobar que no hay NAs
+Data11 %>% 
+  summarise(across(everything(), ~sum(is.na(.))))
+
+```
+
+### 3. **<span style = "background-color: #FFFF00">missForest()</span>**
+
+**missForest()** emplea random forest entrenado en la observaciones completas de la data para predecir los valores perdidos.\
+Utilizamos la función **missForest()** para imputar la data y luego, mediante **$ximp** extraemos la data.
+
+```{r}
+library(missForest)
+Data11 <- missForest(airquality)$ximp
+head(Data11)
+#Comprobar que no hay NAs
+Data11 %>% 
+  summarise(across(everything(), ~sum(is.na(.))))
+
+```
+
+### 4. **Hmisc - impute()**
+
+Se emplea la función **mutate** para sobreescribir la variable *Ozone* y **impute()** para realizar la imputación, dándole como segundo parámetro la función que deseamos utilizar la imputación (puede ser: median, mean, "random")
+
+```{r}
+library(Hmisc)
+Data11 <- airquality %>% 
+  mutate(Ozone = impute(Ozone, mean))
+head(Data11)
+#Comprobar que no hay NAs
+Data11 %>% 
+  summarise(across(everything(), ~sum(is.na(.))))
+```
+
+### 5. **<span style = "background-color: #FFFF00">Eliminarlos</span>**
+
+Esta es la última opción que se debe tomar, que es la de eliminar los NAs.\
+Mediante la función **na.omit()**.\\
+
+De toda la data:
+
+```{r}
+Data11 <- airquality %>% 
+  na.omit()
+head(Data11)
+#Comprobar que no hay NAs
+Data11 %>% 
+  summarise(across(everything(), ~sum(is.na(.))))
+
+```
+
+De sola una columna:
+
+```{r}
+Data11 <- airquality %>% 
+  filter(!is.na(Ozone))
+head(Data11)
+#Comprobar que no hay NAs
+Data11 %>% 
+  summarise(across(everything(), ~sum(is.na(.))))
+
+```
+
+
+
+
+
